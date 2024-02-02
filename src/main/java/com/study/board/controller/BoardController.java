@@ -38,13 +38,21 @@ public class BoardController {
 
 
     @GetMapping("/board/list")
-    public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String boardList(Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                            String searchKeyword) {
 
-        Page<Board> list = boardService.boardList(pageable);
+        Page<Board> list = null;
+
+        if (searchKeyword == null) {
+            list = boardService.boardList(pageable);
+        } else {
+            list = boardService.boardSearchList(searchKeyword, pageable);
+        }
 
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
-        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
