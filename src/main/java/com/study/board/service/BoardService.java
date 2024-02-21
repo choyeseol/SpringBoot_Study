@@ -22,18 +22,21 @@ public class BoardService {
 
     // 글 작성 처리
     public void write(Board board, MultipartFile file) throws Exception{
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        UUID uuid = UUID.randomUUID();
+        if (file != null && !file.isEmpty()) {
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
 
-        File saveFile = new File(projectPath, fileName);
+            String fileName = uuid + "_" + file.getOriginalFilename();
 
-        file.transferTo(saveFile);
+            File saveFile = new File(projectPath, fileName);
 
-        board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
+            file.transferTo(saveFile);
+
+            board.setFilename(fileName);
+            board.setFilepath("/files/" + fileName);
+        }
 
         boardRepository.save(board);
     }
