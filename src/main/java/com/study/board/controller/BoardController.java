@@ -19,9 +19,9 @@ public class BoardController {
     private BoardService boardService;
 
 
-    @GetMapping("/board")
-    public String boardWriteForm() {
-        return "boardwrite";
+    @GetMapping("/")
+    public String boardListForm() {
+        return "redirect:/board/list";
     }
 
 
