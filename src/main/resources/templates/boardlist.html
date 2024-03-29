@@ -19,14 +19,18 @@
     </style>
 </head>
 <body>
+
 <div class="layout">
     <table>
         <thead>
         <tr>
+            <a href="/users/new">회원가입</a>
+            &nbsp;&nbsp;
+            <a href="/users">회원목록</a>
             <th>글번호</th>
             <th class="title">제목</th>
             <th class="write-button">
-                <form action="/board">
+                <form action="/board/write" method="post">
                     <button type="submit">글 작성</button>
                 </form>
             </th>
