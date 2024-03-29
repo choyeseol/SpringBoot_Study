@@ -3,6 +3,8 @@ package com.study.board.controller;
 import com.study.board.domain.entity.Board;
 import com.study.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @Controller
 public class BoardController {
 
@@ -19,14 +22,14 @@ public class BoardController {
     private BoardService boardService;
 
 
-    @GetMapping("/")
+    @GetMapping("/board")
     public String boardListForm() {
         return "redirect:/board/list";
     }
 
 
     @PostMapping("/board/write")
-    public String boardWrite(Board board, Integer id, Model model, MultipartFile file) throws  Exception{
+    public String boardWrite(@RequestBody Board board, Model model, MultipartFile file) throws  Exception{
 
         boardService.write(board, file);
 
